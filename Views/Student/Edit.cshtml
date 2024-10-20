@@ -1,0 +1,115 @@
+﻿@model WebApplicationMVC.Models.Student
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit Student</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form id="editStudentForm" asp-action="Edit" method="post">
+            <div id="validationSummary" class="alert alert-danger" style="display:none;"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" id="Id" class="form-control" readonly />
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" id="Name" class="form-control" />
+                <span id="NameError" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Age" class="control-label"></label>
+                <input asp-for="Age" id="Age" class="form-control" />
+                <span id="AgeError" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Gender" class="control-label"></label>
+                <input asp-for="Gender" id="Gender" class="form-control" />
+                <span id="GenderError" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Stander" class="control-label"></label>
+                <input asp-for="Stander" id="Stander" class="form-control" />
+                <span id="StanderError" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="FatherName" class="control-label"></label>
+                <input asp-for="FatherName" id="FatherName" class="form-control" />
+                <span id="FatherNameError" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" id="saveButton" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#editStudentForm').submit(function (e) {
+                // Clear previous validation messages
+                $('#validationSummary').hide().html('');
+                $('.text-danger').html('');
+
+                // Perform client-side validations
+                var isValid = true;
+
+                // Name validation
+                if (!$('#Name').val()) {
+                    $('#NameError').html('Name is required.');
+                    isValid = false;
+                }
+
+                // Age validation
+                var age = $('#Age').val();
+                if (!age) {
+                    $('#AgeError').html('Age is required.');
+                    isValid = false;
+                } else if (!$.isNumeric(age) || age <= 0) {
+                    $('#AgeError').html('Please enter a valid age.');
+                    isValid = false;
+                }
+
+                // Gender validation
+                if (!$('#Gender').val()) {
+                    $('#GenderError').html('Gender is required.');
+                    isValid = false;
+                }
+
+                // Stander validation
+                if (!$('#Stander').val()) {
+                    $('#StanderError').html('Stander is required.');
+                    isValid = false;
+                }
+
+                // FatherName validation
+                if (!$('#FatherName').val()) {
+                    $('#FatherNameError').html('Father Name is required.');
+                    isValid = false;
+                }
+
+                // If form is invalid, prevent submission and show validation summary
+                if (!isValid) {
+                    $('#validationSummary').html('Please fix the errors before submitting.').show();
+                    e.preventDefault(); // Prevent form submission
+                }
+            });
+        });
+    </script>
+}
